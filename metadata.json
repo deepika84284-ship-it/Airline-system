@@ -1,0 +1,5 @@
+{
+  "name": "SkyStream Airlines",
+  "description": "A comprehensive airline reservation system featuring flight search, seat selection, and booking management.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "User's full name" },
+        "email": { "type": "string", "format": "email", "description": "User's email address" },
+        "role": { "type": "string", "enum": ["user", "admin"], "description": "User's access level" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Flight": {
+      "title": "Flight",
+      "description": "Available flight information",
+      "type": "object",
+      "properties": {
+        "flightNumber": { "type": "string", "description": "Unique flight identifier" },
+        "airline": { "type": "string", "description": "Airline name" },
+        "source": { "type": "string", "description": "Departure city" },
+        "destination": { "type": "string", "description": "Arrival city" },
+        "departureTime": { "type": "string", "format": "date-time", "description": "Scheduled departure time" },
+        "arrivalTime": { "type": "string", "format": "date-time", "description": "Scheduled arrival time" },
+        "price": { "type": "number", "description": "Ticket price" },
+        "availableSeats": { "type": "number", "description": "Number of seats remaining" },
+        "totalSeats": { "type": "number", "description": "Total capacity" }
+      },
+      "required": ["flightNumber", "airline", "source", "destination", "departureTime", "arrivalTime", "price", "availableSeats"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Flight reservation details",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the user who booked" },
+        "flightId": { "type": "string", "description": "ID of the flight booked" },
+        "passengerName": { "type": "string", "description": "Name of the passenger" },
+        "seatNumber": { "type": "string", "description": "Assigned seat (e.g., 12A)" },
+        "status": { "type": "string", "enum": ["confirmed", "cancelled"], "description": "Booking status" },
+        "bookingDate": { "type": "string", "format": "date-time", "description": "When the booking was made" },
+        "flightDetails": { "type": "object", "description": "Snapshot of flight info at booking time" }
+      },
+      "required": ["userId", "flightId", "passengerName", "seatNumber", "status", "bookingDate"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/flights/{flightId}": {
+      "schema": "Flight",
+      "description": "Available flights"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "User flight reservations"
+    }
+  }
+}
